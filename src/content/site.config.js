@@ -113,8 +113,8 @@ export const projects = [
   },
   {
     id: "launch-day",
-    title: "Launch Day",
-    category: "Brand · Product film",
+    title: "Wisam",
+    category: "Tajarib Podcast",
     year: "2025",
     description:
       "A",
