@@ -1,0 +1,29 @@
+.footer {
+  border-top: 1px solid var(--glass-border);
+  padding-block: 2rem;
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--paper-faint);
+}
+
+.footer__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--paper-dim);
+}
+
+.footer__links {
+  display: flex;
+  gap: 1.4rem;
+}
+
+.footer__links a:hover {
+  color: var(--paper);
+}

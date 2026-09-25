@@ -1,0 +1,129 @@
+.contact__intro {
+  max-width: 46ch;
+  margin-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+.contact__heading {
+  font-size: var(--step-h2);
+  margin-bottom: 1rem;
+}
+
+.contact__subheading {
+  color: var(--paper-dim);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.contact__direct,
+.contact__form {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.contact__channel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--glass-border);
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.contact__direct .contact__channel:first-child {
+  padding-top: 0;
+}
+
+.contact__channel:hover {
+  opacity: 0.75;
+}
+
+.contact__channel-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.contact__channel-value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+.contact__social {
+  display: flex;
+  gap: 1.4rem;
+  padding-top: 1.3rem;
+  font-weight: 600;
+  color: var(--paper-dim);
+}
+
+.contact__social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact__social a:hover {
+  color: var(--paper);
+}
+
+.social-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+}
+
+.social-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact__field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--paper-dim);
+}
+
+.contact__field input,
+.contact__field textarea {
+  background: rgba(236, 233, 225, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 0.9rem;
+  color: var(--paper);
+  font: inherit;
+  resize: vertical;
+}
+
+.contact__field input:focus,
+.contact__field textarea:focus {
+  border-color: var(--glass-border-gold);
+}
+
+.contact__form .btn {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 800px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}

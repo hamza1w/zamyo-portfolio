@@ -1,0 +1,78 @@
+
+.portrait-gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  isolation: isolate;
+}
+
+.portrait-gallery__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1;
+
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.portrait-gallery__slide .media-image,
+.portrait-gallery__slide .media-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.portrait-gallery__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  padding: 0.25rem 0.45rem;
+
+  background: rgba(7, 10, 16, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.portrait-gallery__dots button {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+
+  border: none;
+  padding: 0;
+
+  border-radius: 50%;
+
+  background: rgba(236, 233, 225, 0.3);
+
+  cursor: pointer;
+
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.portrait-gallery__dots button.is-active {
+  background: var(--sapphire-light);
+  transform: scale(1.2);
+}

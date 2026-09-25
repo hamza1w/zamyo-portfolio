@@ -1,0 +1,19 @@
+.about__wrap {
+  max-width: 62ch;
+}
+
+.about__lede {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1vw + 1.2rem, 1.9rem);
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  max-width: 36ch;
+}
+
+.about__p {
+  color: var(--paper-dim);
+  line-height: 1.7;
+  max-width: 55ch;
+  margin-bottom: 1.1rem;
+  font-size: 1.05rem;
+}

@@ -1,0 +1,48 @@
+:root {
+  /* ---- Color: base (cooler, blue-black rather than neutral) ---- */
+  --ink: #070a10;
+  --ink-2: #0c1119;
+  --ink-3: #121a24;
+  --paper: #ece9e1;
+  --paper-dim: #a9a9a3;
+  --paper-faint: #6f716f;
+
+  /* ---- Color: accents ---- */
+  --gold: #c9a227;
+  --gold-light: #e9c765;
+  --gold-dim: #8a712a;
+  --sapphire: #3e7ca6;
+  --sapphire-light: #7cbadf;
+  --sapphire-dim: #1f3b4c;
+  --sapphire-deep: #123145;
+
+  /* ---- Glass surfaces ---- */
+  --glass-fill: rgba(124, 186, 223, 0.05);
+  --glass-fill-strong: rgba(124, 186, 223, 0.09);
+  --glass-border: rgba(124, 186, 223, 0.14);
+  --glass-border-gold: rgba(201, 162, 39, 0.35);
+  --glass-border-blue: rgba(124, 186, 223, 0.4);
+  --glass-blur: 18px;
+
+  /* ---- Type ---- */
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+
+  --step-body: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+  --step-h1: clamp(2.75rem, 1.8rem + 4.5vw, 6.25rem);
+  --step-h2: clamp(2rem, 1.5rem + 2.2vw, 3.4rem);
+  --step-h3: clamp(1.35rem, 1.15rem + 0.9vw, 1.85rem);
+
+  /* ---- Layout ---- */
+  --content-max: 1240px;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 220ms;
+  --dur-med: 480ms;
+  --dur-slow: 900ms;
+}

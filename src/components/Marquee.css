@@ -1,0 +1,41 @@
+.marquee {
+  padding-block: clamp(1rem, 2vw, 1.5rem);
+}
+
+.marquee__track-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee__glass {
+  padding-inline: 1.5rem;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  gap: clamp(2.5rem, 5vw, 3rem);
+  padding-block: 1.5rem;
+  animation: marquee-scroll 26s linear infinite;
+}
+
+.marquee__item {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
+  font-weight: 600;
+  color: var(--paper-faint);
+  white-space: nowrap;
+}
+
+.marquee__item:nth-child(odd) {
+  color: var(--paper-dim);
+}
+
+.marquee__track--reverse {
+  animation-direction: reverse;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
