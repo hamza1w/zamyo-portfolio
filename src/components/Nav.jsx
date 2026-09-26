@@ -17,7 +17,7 @@ export default function Nav() {
 
   return (
     <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
-  {scrolled && <div className="nav__glass glass-liquid" aria-hidden="true" />}
+  <div className={`nav__glass glass-liquid ${scrolled ? "is-visible" : ""}`} aria-hidden="true" />
   <div className="nav__inner container">
         <nav className="nav__links" aria-label="Primary">
           {nav.links.map((l) => (
