@@ -33,7 +33,16 @@
   overflow: hidden;
   border: 1px solid var(--glass-border);
 }
-
+.work__note {
+  font-size: 0.7rem;
+  color: #ff3b3b;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  text-shadow:
+    0 0 5px rgba(255, 59, 59, 0.8),
+    0 0 12px rgba(255, 59, 59, 0.5),
+    0 0 20px rgba(255, 59, 59, 0.3);
+}
 .work__media .media-image,
 .work__media .media-image img {
   width: 100%;

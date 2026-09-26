@@ -26,6 +26,9 @@ export default function Work() {
           <div>
             <p className="section-label">Selected work</p>
             <h2 className="work__heading">A few recent cuts.</h2>
+            <p className="work__note">
+  Note: These are just previews. They are lower quality than the actual videos.
+</p>
           </div>
         </div>
 
