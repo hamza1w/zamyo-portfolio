@@ -47,8 +47,8 @@ img, video {
   overflow: hidden;
   border: 1px solid var(--glass-border);
   border-radius: 0;
-    backdrop-filter: url(#glass-distortion) blur(7px) saturate(0);
-  -webkit-backdrop-filter: blur(20px) saturate(0);
+    backdrop-filter: url(#glass-distortion) blur(8px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .glass-liquid::before {
@@ -64,8 +64,8 @@ img, video {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-top-color: rgba(255, 255, 255, 0.45);
-    backdrop-filter: url(#glass-distortion) blur(7px) saturate(0);
-  -webkit-backdrop-filter: blur(20px) saturate(0);
+    backdrop-filter: url(#glass-distortion) blur(8px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     inset 0 -14px 22px -16px rgba(0, 0, 0, 0.55),
