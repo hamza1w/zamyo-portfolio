@@ -16,7 +16,7 @@ export default function Nav() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
+    <header className={`nav ${scrolled ? "nav--scrolled glass-liquid" : ""}`}>
       <div className="nav__inner container">
         <nav className="nav__links" aria-label="Primary">
           {nav.links.map((l) => (

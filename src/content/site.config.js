@@ -192,9 +192,9 @@ export const contact = {
     label: "+964 0776 166 4404",
   },
   social: [
-    { label: "Instagram", icon: "instagram", href: "https://instagram.com/zamyo" },
-    { label: "TikTok", icon: "tiktok", href: "https://tiktok.com/@zamyo" },
-    { label: "YouTube", icon: "youtube", href: "https://youtube.com/@zamyo" },
+    { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/zamyoo6/?hl=en" },
+    { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/@zamyoo66" },
+    { label: "YouTube", icon: "youtube", href: "https://www.youtube.com/@zamyo-6" },
   ],
   form: {
     // Formspree/Netlify Forms endpoint — see README.md to wire this up.
