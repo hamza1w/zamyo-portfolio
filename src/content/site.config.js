@@ -58,7 +58,7 @@ export const showreel = {
     src: "/portfolio/Comp 1_10.mp4",
     poster: "/media/showreel-poster.jpg",
   },
-  duration: "0:11",
+  work: "0:11",
 };
 
 /**
@@ -168,7 +168,7 @@ export const skills = {
 };
 
 export const clients = {
-  heading: "Worked with",
+  heading: "Companies Worked with",
   names: ["Tajarib Podcast", "Blackshot Marketing Agency"],
 };
 
