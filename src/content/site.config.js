@@ -56,7 +56,7 @@ export const showreel = {
   // Replace with your real showreel file (mp4, ideally H.264, under ~15MB) or a hosted URL.
   video: {
     src: "/portfolio/Comp 1_10.mp4",
-    poster: "/media/showreel-poster.jpg",
+    poster: "/portfolio/showreel-poster.png",
   },
   work: "0:11",
 };
