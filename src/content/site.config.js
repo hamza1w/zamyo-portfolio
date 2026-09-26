@@ -109,7 +109,7 @@ export const projects = [
       "Z",
     thumb: "/portfolio/Screenshot 2026-09-24 232607.png",
     video: "/portfolio/ruwaida monalisa ai final.mp4",
-    ratio: "16 / 9",
+    ratio: "9 / 16",
   },
   {
     id: "launch-day",
@@ -120,7 +120,7 @@ export const projects = [
       "A",
     thumb: "/portfolio/Screenshot 2026-09-24 235357.png",
     video: "/portfolio/Copy of wasmi reel 3 final.mp4",
-    ratio: "16 / 9",
+    ratio: "9 / 16",
   },
 ];
 
