@@ -8,8 +8,11 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { skills, clients } from "./content/site.config";
+import { useLanguage } from "./context/LanguageContext.jsx";
 
 export default function App() {
+  const { lang } = useLanguage();
+
   return (
     <>
       <div className="app-bg" aria-hidden="true" />
@@ -19,8 +22,8 @@ export default function App() {
         <Showreel />
         <Work />
         <Services />
-        <Marquee label={skills.heading} items={skills.tools} />
-        <Marquee label={clients.heading} items={clients.names} reverse />
+        <Marquee label={skills.heading[lang]} items={skills.tools} />
+        <Marquee label={clients.heading[lang]} items={clients.names} reverse />
         <About />
         <Contact />
       </main>

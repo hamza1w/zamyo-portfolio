@@ -10,7 +10,6 @@
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--sapphire-light);
-  border: 1px solid var(--glass-border-blue);
   border-radius: 999px;
   padding: 0.3rem 0.8rem;
   margin-bottom: 1.1rem;
@@ -18,7 +17,6 @@
 
 .services__tag--muted {
   color: var(--paper-faint);
-  border-color: var(--glass-border);
   margin-bottom: 0.4rem;
 }
 

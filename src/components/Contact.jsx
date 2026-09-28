@@ -1,28 +1,31 @@
 import { contact } from "../content/site.config";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import Reveal from "./Reveal";
 import SocialIcon from "./SocialIcon";
 import "./Contact.css";
 
 export default function Contact() {
+  const { lang } = useLanguage();
   const whatsappHref = `https://wa.me/${contact.whatsapp.number}`;
+  const f = contact.form.fields;
 
   return (
     <section id="contact" className="section contact">
       <div className="container">
         <Reveal className="contact__intro">
-          <h2 className="contact__heading">{contact.heading}</h2>
-          <p className="contact__subheading">{contact.subheading}</p>
+          <h2 className="contact__heading">{contact.heading[lang]}</h2>
+          <p className="contact__subheading">{contact.subheading[lang]}</p>
         </Reveal>
 
         <div className="contact__grid">
           <Reveal delay={80} className="contact__direct glass">
             <a href={`mailto:${contact.email}`} className="contact__channel">
-              <span className="contact__channel-label">Email</span>
+              <span className="contact__channel-label">{contact.emailLabel[lang]}</span>
               <span className="contact__channel-value">{contact.email}</span>
             </a>
 
             <a href={whatsappHref} target="_blank" rel="noreferrer" className="contact__channel">
-              <span className="contact__channel-label">WhatsApp</span>
+              <span className="contact__channel-label">{contact.whatsappLabel[lang]}</span>
               <span className="contact__channel-value">{contact.whatsapp.label}</span>
             </a>
 
@@ -38,22 +41,22 @@ export default function Contact() {
 
           <Reveal delay={160} as="form" className="contact__form glass" action={contact.form.action} method="POST">
             <div className="contact__field">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">{f.name[lang]}</label>
               <input id="name" name="name" type="text" required autoComplete="name" />
             </div>
 
             <div className="contact__field">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">{f.email[lang]}</label>
               <input id="email" name="email" type="email" required autoComplete="email" />
             </div>
 
             <div className="contact__field">
-              <label htmlFor="message">Tell me about the project</label>
+              <label htmlFor="message">{f.message[lang]}</label>
               <textarea id="message" name="message" rows="4" required />
             </div>
 
             <button type="submit" className="btn btn-primary">
-              Send message
+              {f.submit[lang]}
             </button>
           </Reveal>
         </div>

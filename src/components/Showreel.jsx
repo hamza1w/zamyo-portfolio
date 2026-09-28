@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { showreel } from "../content/site.config";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import FrameCorners from "./FrameCorners";
 import MediaImage from "./MediaImage";
 import "./Showreel.css";
@@ -7,6 +8,7 @@ import "./Showreel.css";
 export default function Showreel() {
   const videoRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const { lang } = useLanguage();
 
   const play = () => {
     const el = videoRef.current;
@@ -18,8 +20,8 @@ export default function Showreel() {
   return (
     <section id="showreel" className="section showreel">
       <div className="container">
-        <p className="section-label">{showreel.heading}</p>
-        <h2 className="showreel__heading">{showreel.subheading}</h2>
+        <p className="section-label">{showreel.heading[lang]}</p>
+        <h2 className="showreel__heading">{showreel.subheading[lang]}</h2>
 
         <div className="showreel__frame glass">
           <FrameCorners />

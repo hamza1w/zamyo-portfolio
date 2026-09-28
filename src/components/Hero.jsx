@@ -1,31 +1,34 @@
 import { hero } from "../content/site.config";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import FrameCorners from "./FrameCorners";
 import PortraitGallery from "./PortraitGallery";
 import "./Hero.css";
 
 export default function Hero() {
+  const { lang } = useLanguage();
+
   return (
     <section id="top" className="hero">
       <div className="container hero__inner">
         <div className="hero__copy">
-          <p className="section-label">{hero.eyebrow}</p>
+          <p className="section-label">{hero.eyebrow[lang]}</p>
 
           <h1 className="hero__headline">
-            {hero.headline.map((line) => (
+            {hero.headline[lang].map((line) => (
               <span key={line} className="hero__line">
                 {line}
               </span>
             ))}
           </h1>
 
-          <p className="hero__subtext">{hero.subtext}</p>
+          <p className="hero__subtext">{hero.subtext[lang]}</p>
 
           <div className="hero__ctas">
             <a href={hero.primaryCta.href} className="btn btn-primary">
-              {hero.primaryCta.label}
+              {hero.primaryCta.label[lang]}
             </a>
             <a href={hero.secondaryCta.href} className="btn btn-ghost">
-              {hero.secondaryCta.label}
+              {hero.secondaryCta.label[lang]}
             </a>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { projects } from "../content/site.config";
+import { projects, workSection, ui } from "../content/site.config";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import FrameCorners from "./FrameCorners";
 import MediaImage from "./MediaImage";
 import Reveal from "./Reveal";
@@ -7,6 +8,7 @@ import "./Work.css";
 
 export default function Work() {
   const [active, setActive] = useState(null);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (!active) return;
@@ -24,11 +26,9 @@ export default function Work() {
       <div className="container">
         <div className="section-head">
           <div>
-            <p className="section-label">Selected work</p>
-            <h2 className="work__heading">A few recent cuts.</h2>
-            <p className="work__note">
-  Note: These are just previews. They are lower quality than the actual videos.
-</p>
+            <p className="section-label">{workSection.label[lang]}</p>
+            <h2 className="work__heading">{workSection.heading[lang]}</h2>
+            <p className="work__note">{workSection.previewNote[lang]}</p>
           </div>
         </div>
 
@@ -59,7 +59,7 @@ export default function Work() {
         <div className="work__lightbox" role="dialog" aria-modal="true" aria-label={active.title}>
           <div className="work__lightbox-backdrop" onClick={() => setActive(null)} />
           <div className="work__lightbox-panel glass">
-            <button className="work__close" onClick={() => setActive(null)} aria-label="Close project">
+            <button className="work__close" onClick={() => setActive(null)} aria-label={ui.closeProject[lang]}>
               ✕
             </button>
 
