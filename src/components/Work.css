@@ -5,8 +5,8 @@
 
 .work__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.7rem, 1.2vw, 1.1rem);
 }
 
 .work__card {
@@ -24,6 +24,13 @@
 
 .work__card--wide {
   grid-column: span 2;
+}
+
+/* A slight stagger for an editorial, filmstrip feel instead of a flat grid */
+@media (min-width: 901px) {
+  .work__card:nth-child(even) {
+    transform: translateY(1.75rem);
+  }
 }
 
 .work__media {
@@ -89,11 +96,17 @@
 
 @media (max-width: 900px) {
   .work__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .work__card--wide {
     grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .work__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
