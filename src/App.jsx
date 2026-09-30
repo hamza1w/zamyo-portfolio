@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Showreel from "./components/Showreel";
@@ -8,12 +7,9 @@ import Marquee from "./components/Marquee";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import FlowField from "./components/FlowField";
 import { skills, clients } from "./content/site.config";
 import { useLanguage } from "./context/LanguageContext.jsx";
-
-// Loaded after the initial page paint — three.js is heavy and the 3D
-// layer is decorative, so it shouldn't delay first content showing up.
-const Background3D = lazy(() => import("./components/Background3D"));
 
 export default function App() {
   const { lang } = useLanguage();
@@ -21,9 +17,7 @@ export default function App() {
   return (
     <>
       <div className="app-bg" aria-hidden="true" />
-      <Suspense fallback={null}>
-        <Background3D />
-      </Suspense>
+      <FlowField />
       <Nav />
       <main>
         <Hero />
