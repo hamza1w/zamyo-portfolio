@@ -1,0 +1,58 @@
+.depth-icons {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 1400px;
+}
+
+.depth-icons__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.depth-icons__item {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  transform: translate3d(0, 0, var(--z));
+  animation: depth-icon-float var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+  transition: filter 300ms ease, opacity 300ms ease;
+}
+
+.depth-icons__item svg {
+  width: 100%;
+  height: 100%;
+}
+
+.depth-icons__item--gold {
+  color: var(--gold-light);
+}
+
+.depth-icons__item--blue {
+  color: var(--sapphire-light);
+}
+
+@keyframes depth-icon-float {
+  0%, 100% {
+    transform: translate3d(0, 0, var(--z)) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, var(--z)) rotateY(10deg) rotateZ(-3deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .depth-icons__item {
+    transform: translate3d(0, 0, calc(var(--z) * 0.4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-icons__item {
+    animation: none;
+  }
+}

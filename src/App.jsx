@@ -7,7 +7,7 @@ import Marquee from "./components/Marquee";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import FlowField from "./components/FlowField";
+import DepthIcons from "./components/DepthIcons";
 import { skills, clients } from "./content/site.config";
 import { useLanguage } from "./context/LanguageContext.jsx";
 
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <>
       <div className="app-bg" aria-hidden="true" />
-      <FlowField />
+      <DepthIcons />
       <Nav />
       <main>
         <Hero />
