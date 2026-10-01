@@ -4,15 +4,20 @@ import "./Scene3D.css";
 
 /**
  * Real 3D objects built entirely from video-editing / filming shapes —
- * cameras, clapperboards, film reels, play buttons, mics, lenses, and
- * waveforms — repeated and varied, spread across the FULL page height
- * (measured from document.scrollHeight) so new ones keep scrolling into
- * view the whole way down instead of a small cluster emptying out after
- * one screen's worth of scrolling.
+ * cameras, clapperboards, film reels, play buttons, mics, and lenses —
+ * repeated and varied, spread across the FULL page height (measured from
+ * document.scrollHeight) so new ones keep scrolling into view the whole
+ * way down. Placement uses simple rejection sampling so instances don't
+ * clip through each other. Distance fog fades the further-back, smaller
+ * objects toward near-black for a depth cue — a true post-process blur
+ * (BokehPass) was tried here but it forces the canvas fully opaque and
+ * wipes out the transparent background behind it, so fog is the fix that
+ * keeps transparency intact while still reading as "further = less
+ * distinct."
  *
  * All one steel-blue tone, with a procedural brushed-metal bump texture
- * plus a couple of purpose-made canvas textures (clapperboard stripes,
- * mic grille) for recognizable surface detail — no external image assets.
+ * plus purpose-made canvas textures (clapperboard stripes, mic grille)
+ * for recognizable surface detail — no external image assets.
  */
 
 const GOLD_LIGHT = 0xc9a227;
@@ -40,8 +45,6 @@ function makeNoiseTexture() {
   return tex;
 }
 
-// Classic diagonal clapperboard stripes — this is the detail that makes a
-// plain box actually read as a clapperboard.
 function makeClapperTexture() {
   const size = 256;
   const canvas = document.createElement("canvas");
@@ -59,11 +62,9 @@ function makeClapperTexture() {
     ctx.fillRect(0, 0, stripeWidth, size);
     ctx.restore();
   }
-  const tex = new THREE.CanvasTexture(canvas);
-  return tex;
+  return new THREE.CanvasTexture(canvas);
 }
 
-// A grid of small dark dots — reads as a mic grille at a glance.
 function makeGrilleTexture() {
   const size = 256;
   const canvas = document.createElement("canvas");
@@ -90,6 +91,7 @@ function makeGrilleTexture() {
 function makeCamera(material, accentMaterial) {
   const g = new THREE.Group();
   g.add(new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.05, 1.05), material));
+
   const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.46, 0.7, 28), material);
   lens.rotation.z = Math.PI / 2;
   lens.position.set(1.15, 0, 0);
@@ -98,56 +100,100 @@ function makeCamera(material, accentMaterial) {
   lensRim.rotation.y = Math.PI / 2;
   lensRim.position.set(1.47, 0, 0);
   g.add(lensRim);
+
   const viewfinder = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 0.4), material);
   viewfinder.position.set(-0.2, 0.68, 0);
   g.add(viewfinder);
+
   const grip = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.55, 0.35), material);
   grip.position.set(-0.55, -0.7, 0);
   g.add(grip);
+
   for (let i = 0; i < 2; i++) {
     const dial = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.08, 16), accentMaterial);
     dial.rotation.x = Math.PI / 2;
     dial.position.set(-0.35 + i * 0.35, 0.56, 0.5);
     g.add(dial);
   }
+
+  // Hot-shoe mount on top — a small raised block, the detail that reads
+  // unmistakably as "camera" from above.
+  const hotshoe = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.1, 0.3), accentMaterial);
+  hotshoe.position.set(0.5, 0.58, 0);
+  g.add(hotshoe);
+
+  // Shutter button — a small raised cylinder near the grip.
+  const shutter = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.07, 14), accentMaterial);
+  shutter.position.set(-0.5, 0.56, -0.3);
+  g.add(shutter);
+
+  // LCD screen on the back face — a flat dark panel, distinct from the body.
+  const screen = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.55, 0.75), accentMaterial);
+  screen.position.set(-0.86, 0, 0);
+  g.add(screen);
+
+  // Strap lugs on either side.
+  [-1, 1].forEach((side) => {
+    const lug = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.03, 8, 16), accentMaterial);
+    lug.rotation.y = Math.PI / 2;
+    lug.position.set(0.78, 0.3, side * 0.5);
+    g.add(lug);
+  });
+
   return g;
 }
 
+// Fixed: the arm and the fixed strip used to sit almost coplanar and
+// overlap once the arm was tilted, causing real z-fighting flicker. Now
+// they're clearly separated in Y (no overlap even after rotation) and
+// in Z (small offset as a safety margin regardless).
 function makeClapper(material, clapperTex) {
   const clapperMat = new THREE.MeshStandardMaterial({ map: clapperTex, metalness: 0.2, roughness: 0.55 });
   const g = new THREE.Group();
-  g.add(new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.1, 0.18), material));
-  const top = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.32, 0.18), clapperMat);
-  top.position.set(0, 0.68, 0.05);
-  top.rotation.z = -0.3;
-  g.add(top);
-  const topBase = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.32, 0.18), clapperMat);
-  topBase.position.set(0, 0.42, 0.05);
-  g.add(topBase);
+
+  const body = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.85, 0.18), material);
+  body.position.set(0, -0.25, 0);
+  g.add(body);
+
+  const fixedStrip = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.3, 0.18), clapperMat);
+  fixedStrip.position.set(0, 0.32, 0);
+  g.add(fixedStrip);
+
+  const arm = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.3, 0.18), clapperMat);
+  arm.position.set(-0.75, 0.68, 0.05);
+  arm.rotation.z = 0.32;
+  g.add(arm);
+
   return g;
 }
 
+// Fixed: three thin rods crossing a ring is exactly a steering wheel.
+// Real film reels are a flat plate with a raised rim and a center hub —
+// no spokes crossing the diameter. Sprocket holes near the rim are what
+// actually reads as "film reel".
 function makeReel(material, accentMaterial) {
   const g = new THREE.Group();
-  g.add(new THREE.Mesh(new THREE.TorusGeometry(0.95, 0.13, 16, 48), material));
-  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.22, 24), material);
+
+  const plate = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 0.1, 48), material);
+  plate.rotation.x = Math.PI / 2;
+  g.add(plate);
+
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(0.95, 0.07, 12, 48), accentMaterial);
+  g.add(rim);
+
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.22, 24), accentMaterial);
   hub.rotation.x = Math.PI / 2;
   g.add(hub);
-  for (let i = 0; i < 3; i++) {
-    const spoke = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 1.7, 10), material);
-    spoke.rotation.z = (i / 3) * Math.PI;
-    g.add(spoke);
-  }
-  // Sprocket holes around the rim — the detail that reads as "film reel"
-  // rather than just "ring".
-  const holeCount = 10;
+
+  const holeCount = 12;
   for (let i = 0; i < holeCount; i++) {
     const angle = (i / holeCount) * Math.PI * 2;
-    const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 0.3, 8), accentMaterial);
+    const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.14, 10), accentMaterial);
     hole.rotation.x = Math.PI / 2;
-    hole.position.set(Math.cos(angle) * 0.95, Math.sin(angle) * 0.95, 0);
+    hole.position.set(Math.cos(angle) * 0.78, Math.sin(angle) * 0.78, 0);
     g.add(hole);
   }
+
   return g;
 }
 
@@ -164,33 +210,77 @@ function makePlay(material, accentMaterial) {
   triShape.lineTo(0.38, 0);
   triShape.lineTo(-0.28, -0.38);
   const tri = new THREE.Mesh(new THREE.ExtrudeGeometry(triShape, { depth: 0.22, bevelEnabled: false }), accentMaterial);
-  tri.position.set(-0.12, 0, 0.12);
+  tri.position.set(-0.12, 0, 0.2);
   g.add(tri);
   return g;
 }
 
+// Fixed: a plain capsule read as a generic pill, not a mic. Real mics
+// have a distinct bulbous grille head sitting on top of a narrower
+// straight body — that silhouette, plus the grille texture confined to
+// just the head, is what actually reads as "microphone".
 function makeMic(material, grilleTex) {
   const grilleMat = new THREE.MeshStandardMaterial({ map: grilleTex, metalness: 0.6, roughness: 0.5 });
   const g = new THREE.Group();
-  g.add(new THREE.Mesh(new THREE.CapsuleGeometry(0.38, 0.6, 8, 18), grilleMat));
-  const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 1.05, 14), material);
-  stand.position.set(0, -0.95, 0);
+
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.34, 20, 20), grilleMat);
+  head.scale.set(1, 1.3, 1);
+  head.position.set(0, 0.55, 0);
+  g.add(head);
+
+  const collar = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.035, 10, 24), material);
+  collar.rotation.x = Math.PI / 2;
+  collar.position.set(0, 0.18, 0);
+  g.add(collar);
+
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.85, 20), material);
+  body.position.set(0, -0.3, 0);
+  g.add(body);
+
+  const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.95, 14), material);
+  stand.position.set(0, -1.2, 0);
   g.add(stand);
+
   const base = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.08, 20), material);
-  base.position.set(0, -1.5, 0);
+  base.position.set(0, -1.7, 0);
   g.add(base);
+
   return g;
 }
 
+// This only reads as "lens" if it's unmistakably a barrel from the side
+// too, not just face-on — a longer barrel with a raised ridged grip band
+// (the focus ring every real lens has) sells that from any rotation.
 function makeLens(material, glassMaterial, accentMaterial) {
   const g = new THREE.Group();
-  g.add(new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.2, 18, 40), material));
-  g.add(new THREE.Mesh(new THREE.SphereGeometry(0.56, 28, 28), glassMaterial));
-  // Concentric aperture rings — the detail that reads as a lens barrel.
-  [0.85, 0.98].forEach((r) => {
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(r, 0.025, 8, 36), accentMaterial);
+
+  const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.78, 1.3, 32), material);
+  barrel.rotation.x = Math.PI / 2;
+  g.add(barrel);
+
+  // Ridged focus-ring grip band — several thin raised rings close together.
+  for (let i = 0; i < 5; i++) {
+    const grip = new THREE.Mesh(new THREE.TorusGeometry(0.76, 0.02, 8, 28), accentMaterial);
+    grip.position.set(0, 0, -0.15 + i * 0.07);
+    g.add(grip);
+  }
+
+  const frontRim = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.68, 0.15, 32), accentMaterial);
+  frontRim.rotation.x = Math.PI / 2;
+  frontRim.position.set(0, 0, 0.68);
+  g.add(frontRim);
+
+  const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.52, 0.08, 32), glassMaterial);
+  glass.rotation.x = Math.PI / 2;
+  glass.position.set(0, 0, 0.77);
+  g.add(glass);
+
+  [0.3, 0.42].forEach((r) => {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(r, 0.02, 8, 32), accentMaterial);
+    ring.position.set(0, 0, 0.78);
     g.add(ring);
   });
+
   return g;
 }
 
@@ -222,6 +312,10 @@ export default function Scene3D() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const scene = new THREE.Scene();
+    
+    // Fades far objects toward the page's own near-black as a depth cue —
+    // works with a transparent canvas, unlike a post-process blur pass.
+    scene.fog = new THREE.Fog(0x070a10, 5, 24);
     const camera = new THREE.PerspectiveCamera(42, mount.clientWidth / mount.clientHeight, 0.1, 100);
     camera.position.set(0, 0, 13);
 
@@ -275,17 +369,15 @@ export default function Scene3D() {
       () => makeWaveform(material),
     ];
 
-    // ---- Spread objects across the FULL page height, not just one
-    // screen's worth, so the background stays populated the whole way
-    // down instead of emptying out after a bit of scrolling. ----
     const scrollMultiplier = 0.0028;
     const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
-    const travelRange = maxScroll * scrollMultiplier; // world units the view will drift by full page scroll
+    const travelRange = maxScroll * scrollMultiplier;
 
     const INSTANCE_COUNT = 18;
     const minZ = -9;
     const maxZ = 7;
     const objects = [];
+    const placed = []; // for simple rejection-sampling spacing
     const group = new THREE.Group();
 
     for (let i = 0; i < INSTANCE_COUNT; i++) {
@@ -294,20 +386,43 @@ export default function Scene3D() {
 
       const z = minZ + Math.random() * (maxZ - minZ);
       const closeness = (z - minZ) / (maxZ - minZ); // 0 = far, 1 = close
-      const baseScale = 0.7 + closeness * 1.5;
+      const baseScale = (0.7 + closeness * 1.5) * 1.3;
 
-      // Spread from just above the first screen down past the full scroll
-      // range, with jitter so instances of the same type don't line up.
-      const spreadY = 4 - (i / INSTANCE_COUNT) * (travelRange + 10) + (Math.random() - 0.5) * 3;
+      // Reject-sample a position that doesn't overlap existing objects —
+      // scaled by the size of both objects involved, since two large
+      // close-up shapes need more room than two small distant ones.
+      let x, spreadY;
+      let attempt = 0;
+      let bestCandidate = null;
+      let bestScore = -Infinity;
+      do {
+        x = (Math.random() - 0.5) * 15;
+        spreadY = 4 - (i / INSTANCE_COUNT) * (travelRange + 10) + (Math.random() - 0.5) * 4;
+        let minDist = Infinity;
+        for (const p of placed) {
+          const requiredGap = (baseScale + p.scale) * 1.1;
+          const d = Math.hypot(x - p.x, spreadY - p.y, (z - p.z) * 0.6) - requiredGap;
+          if (d < minDist) minDist = d;
+        }
+        if (placed.length === 0 || minDist > bestScore) {
+          bestScore = placed.length === 0 ? 0 : minDist;
+          bestCandidate = { x, spreadY };
+        }
+        attempt++;
+      } while (bestScore < 0 && attempt < 25);
+      x = bestCandidate.x;
+      spreadY = bestCandidate.spreadY;
 
-      mesh.position.set((Math.random() - 0.5) * 13, spreadY, z);
-      mesh.scale.setScalar(baseScale * 1.3);
+      mesh.position.set(x, spreadY, z);
+      mesh.scale.setScalar(baseScale);
       mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
 
+      placed.push({ x, y: spreadY, z, scale: baseScale });
       objects.push({
         mesh,
         baseY: spreadY,
-        spin: (Math.random() - 0.5) * 0.006 + 0.002,
+        // Slower, gentler spin than before.
+        spin: (Math.random() - 0.5) * 0.0022 + 0.0009,
         depthFactor: 0.3 + closeness * 0.9,
       });
       group.add(mesh);
