@@ -101,6 +101,16 @@ ul {
   background-size: 140px 140px, 340px 340px;
 }
 
+/* ---- Real page content always paints above the fixed background layers
+   (.app-bg, the 3D scene). Explicit positive z-index here, rather than
+   relying solely on those layers staying negative — that relative-only
+   approach is what let the 3D scene's textures render over the Services
+   list text in RTL. ---- */
+.site-content {
+  position: relative;
+  z-index: 1;
+}
+
 /* ---- Layout ---- */
 .container {
   max-width: var(--content-max);

@@ -23,7 +23,7 @@ Nothing is hardcoded to stock imagery — every image/video is a placeholder tha
 
 | What | Path | Notes |
 |---|---|---|
-| Hero portrait(s) | `public/media/portrait-1.jpg`, `-2`, `-3`… | ~1200×1500, JPG/WEBP. Add/remove entries in `hero.portraits` in the config — hovering the frame cycles through them, tapping does the same on touch devices. This is the only photo spot on the site. |
+| Hero portrait | `hero.portrait.src` in the config | ~1200×1500, JPG/WEBP. This is the only photo spot on the site. |
 | Showreel video | `public/media/showreel.mp4` | H.264 mp4, keep under ~15MB |
 | Showreel poster frame | `public/media/showreel-poster.jpg` | A still from the video |
 | Project thumbnails | `public/portfolio/project-1.jpg` … `project-5.jpg` | Match each project's `ratio` in the config (9/16 or 16/9) |

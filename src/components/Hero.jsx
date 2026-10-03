@@ -1,7 +1,7 @@
 import { hero } from "../content/site.config";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import FrameCorners from "./FrameCorners";
-import PortraitGallery from "./PortraitGallery";
+import MediaImage from "./MediaImage";
 import "./Hero.css";
 
 export default function Hero() {
@@ -36,7 +36,7 @@ export default function Hero() {
         <div className="hero__portrait-wrap">
           <div className="hero__glow" aria-hidden="true" />
           <div className="hero__portrait">
-            <PortraitGallery photos={hero.portraits} />
+            <MediaImage src={hero.portrait.src} alt={hero.portrait.alt} label="Portrait" />
             <FrameCorners />
           </div>
         </div>

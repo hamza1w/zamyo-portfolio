@@ -14,7 +14,7 @@
 }
 
 .footer__mark {
-  font-family: var(--font-display);
+  font-family: var(--font-brand);
   font-weight: 700;
   color: var(--paper-dim);
 }

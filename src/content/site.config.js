@@ -53,17 +53,8 @@ export const hero = {
   },
   primaryCta: { label: { en: "Contact me", ar: "تواصل معي" }, href: "#contact" },
   secondaryCta: { label: { en: "Watch showreel", ar: "شاهد العرض" }, href: "#showreel" },
-  /**
-   * Portrait gallery — add as many as you like. On hover (or tap on
-   * touch devices) the frame cycles through them. Recommended: 1200x1500
-   * (portrait orientation), JPG or WEBP, all roughly the same crop so the
-   * transition feels like one frame rather than a slideshow.
-   */
-  portraits: [
-    { src: "/portfolio/hamza2.png", alt: "Portrait of ZAMYO" },
-    { src: "/portfolio/qqqqq.png", alt: "ZAMYO on set" },
-    { src: "/portfolio/Gemini_Generated_Image_gl4cv9gl4cv9gl4c.png", alt: "ZAMYO editing" },
-  ],
+  // Hero portrait — one photo. Recommended: 1200x1500 (portrait orientation), JPG or WEBP.
+  portrait: { src: "/portfolio/hamza2.png", alt: "Portrait of ZAMYO" },
 };
 
 export const showreel = {
@@ -243,7 +234,7 @@ export const contact = {
   ],
   form: {
     // Formspree/Netlify Forms endpoint — see README.md to wire this up.
-    action: "https://formspree.io/f/mqpawjwa",
+    action: "https://formspree.io/f/your-form-id",
     fields: {
       name: { en: "Name", ar: "الاسم" },
       email: { en: "Email", ar: "البريد الإلكتروني" },

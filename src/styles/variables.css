@@ -27,6 +27,10 @@
   /* ---- Type ---- */
   --font-display: "Fraunces", "Iowan Old Style", serif;
   --font-body: "Manrope", "Segoe UI", sans-serif;
+  /* The ZAMYO wordmark itself — stays Fraunces in both languages, since
+     it's a brand name, not translated content, and shouldn't re-font or
+     shrink when the page switches to Arabic. */
+  --font-brand: "Fraunces", "Iowan Old Style", serif;
 
   --step-body: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
   --step-h1: clamp(2.75rem, 1.8rem + 4.5vw, 6.25rem);

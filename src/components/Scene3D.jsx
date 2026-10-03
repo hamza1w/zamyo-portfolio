@@ -143,26 +143,29 @@ function makeCamera(material, accentMaterial) {
   return g;
 }
 
-// Fixed: the arm and the fixed strip used to sit almost coplanar and
-// overlap once the arm was tilted, causing real z-fighting flicker. Now
-// they're clearly separated in Y (no overlap even after rotation) and
-// in Z (small offset as a safety margin regardless).
+// Fixed properly this time: the previous version still had the body and
+// the fixed strip touching at their shared edge, and the tilted arm's
+// rotated bounding box still reached down far enough to clip the fixed
+// strip — a rotated box's footprint is bigger than its own height. These
+// three pieces now have real, checked gaps between them (verified against
+// the arm's actual rotated extent, not just its unrotated size), plus a
+// generous z offset on the arm as a second line of defense.
 function makeClapper(material, clapperTex) {
   const clapperMat = new THREE.MeshStandardMaterial({ map: clapperTex, metalness: 0.2, roughness: 0.55 });
   const g = new THREE.Group();
 
-  const body = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.85, 0.18), material);
-  body.position.set(0, -0.25, 0);
-  g.add(body);
+  const body = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.8, 0.18), material);
+  body.position.set(0, -0.4, 0);
+  g.add(body); // top edge at y = 0.0
 
-  const fixedStrip = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.3, 0.18), clapperMat);
-  fixedStrip.position.set(0, 0.32, 0);
-  g.add(fixedStrip);
+  const fixedStrip = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.22, 0.18), clapperMat);
+  fixedStrip.position.set(0, 0.21, 0);
+  g.add(fixedStrip); // spans y = 0.10 to 0.32 — clear 0.10 gap under the body
 
-  const arm = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.3, 0.18), clapperMat);
-  arm.position.set(-0.75, 0.68, 0.05);
-  arm.rotation.z = 0.32;
-  g.add(arm);
+  const arm = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.22, 0.18), clapperMat);
+  arm.position.set(-0.75, 0.85, 0.15);
+  arm.rotation.z = 0.3;
+  g.add(arm); // rotated extent bottoms out around y ≈ 0.49 — clear 0.17 gap above the strip
 
   return g;
 }
@@ -312,10 +315,9 @@ export default function Scene3D() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const scene = new THREE.Scene();
-    
     // Fades far objects toward the page's own near-black as a depth cue —
     // works with a transparent canvas, unlike a post-process blur pass.
-    scene.fog = new THREE.Fog(0x070a10, 5, 24);
+    scene.fog = new THREE.Fog(0x070a10, 9, 24);
     const camera = new THREE.PerspectiveCamera(42, mount.clientWidth / mount.clientHeight, 0.1, 100);
     camera.position.set(0, 0, 13);
 

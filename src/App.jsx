@@ -24,18 +24,20 @@ export default function App() {
       <Suspense fallback={null}>
         <Scene3D />
       </Suspense>
-      <Nav />
-      <main>
-        <Hero />
-        <Showreel />
-        <Work />
-        <Services />
-        <Marquee label={skills.heading[lang]} items={skills.tools} />
-        <Marquee label={clients.heading[lang]} items={clients.names} reverse />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
+      <div className="site-content">
+        <Nav />
+        <main>
+          <Hero />
+          <Showreel />
+          <Work />
+          <Services />
+          <Marquee label={skills.heading[lang]} items={skills.tools} />
+          <Marquee label={clients.heading[lang]} items={clients.names} reverse />
+          <About />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
