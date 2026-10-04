@@ -45,7 +45,7 @@ export const hero = {
   eyebrow: { en: "Video editor & content creator", ar: "محرر فيديو وصانع محتوى" },
   headline: {
     en: ["Video that", "gets watched,", "not scrolled past."],
-    ar: ["فيديو", "يُشاهَد،", "لا يُتجاوَز."],
+    ar: ["فيديو", "يُشاهَد،", "لا يُهمل"],
   },
   subtext: {
     en: "I cut short-form content that holds attention from the first frame — for creators, brands, and businesses who need their work to actually get seen.",
@@ -60,8 +60,8 @@ export const hero = {
 export const showreel = {
   heading: { en: "The showreel", ar: "العرض التقديمي" },
   subheading: {
-    en: "A minute of the work speaks louder than a page of the pitch.",
-    ar: "دقيقة من العمل تقول أكثر من صفحة كاملة من الكلام.",
+    en: "A selection of my work, in motion.",
+    ar: "نماذج مختارة من أعمالي.",
   },
   // Replace with your real showreel file (mp4, ideally H.264, under ~15MB) or a hosted URL.
   video: {
@@ -152,7 +152,7 @@ export const services = {
       },
     },
     {
-      title: { en: "Full content creation", ar: "صناعة محتوى متكاملة" },
+      title: { en: "Full content creation", ar: "صناعة محتوى , متكاملة" },
       description: {
         en: "Concept, shoot, and edit handled start to finish, not just the editing pass.",
         ar: "من الفكرة إلى التصوير والمونتاج، من البداية للنهاية، وليس فقط مرحلة المونتاج.",
@@ -234,7 +234,7 @@ export const contact = {
   ],
   form: {
     // Formspree/Netlify Forms endpoint — see README.md to wire this up.
-    action: "https://formspree.io/f/your-form-id",
+    action: "https://formspree.io/f/mqpawjwa",
     fields: {
       name: { en: "Name", ar: "الاسم" },
       email: { en: "Email", ar: "البريد الإلكتروني" },
@@ -261,5 +261,5 @@ export const ui = {
 };
 
 export const seo = {
-  siteUrl: "https://zamyo.example",
+  siteUrl: "https://zamyoportfolio.netlify.app/",
 };
