@@ -6,6 +6,7 @@ import Work from "./components/Work";
 import Services from "./components/Services";
 import Marquee from "./components/Marquee";
 import About from "./components/About";
+import Certificates from "./components/Certificates";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { skills, clients } from "./content/site.config";
@@ -34,6 +35,7 @@ export default function App() {
           <Marquee label={skills.heading[lang]} items={skills.tools} />
           <Marquee label={clients.heading[lang]} items={clients.names} reverse />
           <About />
+          <Certificates />
           <Contact />
         </main>
         <Footer />

@@ -178,14 +178,23 @@ ul {
 }
 
 /* ---- Liquid glass: the big, full "Apple-style" panel (nav capsules use
-   their own smaller-scale version of this filter — see Nav.css) ---- */
+   their own smaller-scale version of this filter — see Nav.css).
+   Deliberately NOT referencing the SVG #glass-distortion filter here:
+   backdrop-filter: url(#...) never actually applies the displacement map
+   in any current browser (confirmed dead weight), and worse, it corrupts
+   Chromium's compositing order for OTHER fixed-position layers on the
+   page — this is what was making the Scene3D canvas (the clapperboard
+   texture, specifically) paint in front of real content like the Work
+   cards and Services text despite correct z-index. Removing the url()
+   reference from backdrop-filter everywhere fixes that rendering bug
+   with no visual loss, since the distortion was never actually visible. */
 .glass-liquid {
   position: relative;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-top-color: rgba(255, 255, 255, 0.45);
-  backdrop-filter: url(#glass-distortion) blur(8px);
+  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),

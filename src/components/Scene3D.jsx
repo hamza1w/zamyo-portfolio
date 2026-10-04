@@ -379,8 +379,18 @@ export default function Scene3D() {
     const minZ = -9;
     const maxZ = 7;
     const objects = [];
-    const placed = []; // for simple rejection-sampling spacing
+    const placed = []; // for rejection-sampling spacing
     const group = new THREE.Group();
+
+    // Sampled scroll fractions (0 = top of page, 1 = fully scrolled) used
+    // to check spacing. Each object's actual y at scroll s is
+    // baseY + s*scrollMultiplier*depthFactor, and objects at different
+    // depths move at different rates — so two instances spaced apart at
+    // scroll=0 can still drift into each other later. Checking only the
+    // start position (the old bug) missed that entirely. Since the drift
+    // is linear in scroll position, sampling across the full range catches
+    // the convergence wherever it happens, not just at the two ends.
+    const SCROLL_SAMPLES = [0, 0.25, 0.5, 0.75, 1];
 
     for (let i = 0; i < INSTANCE_COUNT; i++) {
       const build = shapeTypes[i % shapeTypes.length];
@@ -389,10 +399,12 @@ export default function Scene3D() {
       const z = minZ + Math.random() * (maxZ - minZ);
       const closeness = (z - minZ) / (maxZ - minZ); // 0 = far, 1 = close
       const baseScale = (0.7 + closeness * 1.5) * 1.3;
+      const depthFactor = 0.3 + closeness * 0.9;
 
-      // Reject-sample a position that doesn't overlap existing objects —
-      // scaled by the size of both objects involved, since two large
-      // close-up shapes need more room than two small distant ones.
+      // Reject-sample a position that doesn't overlap existing objects at
+      // ANY point in the scroll journey — scaled by the size of both
+      // objects involved, since two large close-up shapes need more room
+      // than two small distant ones.
       let x, spreadY;
       let attempt = 0;
       let bestCandidate = null;
@@ -403,15 +415,20 @@ export default function Scene3D() {
         let minDist = Infinity;
         for (const p of placed) {
           const requiredGap = (baseScale + p.scale) * 1.1;
-          const d = Math.hypot(x - p.x, spreadY - p.y, (z - p.z) * 0.6) - requiredGap;
-          if (d < minDist) minDist = d;
+          for (const t of SCROLL_SAMPLES) {
+            const s = t * maxScroll;
+            const yNew = spreadY + s * scrollMultiplier * depthFactor;
+            const yExisting = p.y + s * scrollMultiplier * p.depthFactor;
+            const d = Math.hypot(x - p.x, yNew - yExisting, (z - p.z) * 0.6) - requiredGap;
+            if (d < minDist) minDist = d;
+          }
         }
         if (placed.length === 0 || minDist > bestScore) {
           bestScore = placed.length === 0 ? 0 : minDist;
           bestCandidate = { x, spreadY };
         }
         attempt++;
-      } while (bestScore < 0 && attempt < 25);
+      } while (bestScore < 0 && attempt < 40);
       x = bestCandidate.x;
       spreadY = bestCandidate.spreadY;
 
@@ -419,13 +436,13 @@ export default function Scene3D() {
       mesh.scale.setScalar(baseScale);
       mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
 
-      placed.push({ x, y: spreadY, z, scale: baseScale });
+      placed.push({ x, y: spreadY, z, scale: baseScale, depthFactor });
       objects.push({
         mesh,
         baseY: spreadY,
         // Slower, gentler spin than before.
         spin: (Math.random() - 0.5) * 0.0022 + 0.0009,
-        depthFactor: 0.3 + closeness * 0.9,
+        depthFactor,
       });
       group.add(mesh);
     }

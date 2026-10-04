@@ -45,7 +45,7 @@ export const hero = {
   eyebrow: { en: "Video editor & content creator", ar: "محرر فيديو وصانع محتوى" },
   headline: {
     en: ["Video that", "gets watched,", "not scrolled past."],
-    ar: ["فيديو", "يُشاهَد،", "لا يُهمل"],
+    ar: ["فيديو", "يُشاهَد،", "لا يُتجاوَز."],
   },
   subtext: {
     en: "I cut short-form content that holds attention from the first frame — for creators, brands, and businesses who need their work to actually get seen.",
@@ -60,8 +60,8 @@ export const hero = {
 export const showreel = {
   heading: { en: "The showreel", ar: "العرض التقديمي" },
   subheading: {
-    en: "A selection of my work, in motion.",
-    ar: "نماذج مختارة من أعمالي.",
+    en: "A minute of the work speaks louder than a page of the pitch.",
+    ar: "دقيقة من العمل تقول أكثر من صفحة كاملة من الكلام.",
   },
   // Replace with your real showreel file (mp4, ideally H.264, under ~15MB) or a hosted URL.
   video: {
@@ -152,7 +152,7 @@ export const services = {
       },
     },
     {
-      title: { en: "Full content creation", ar: "صناعة محتوى , متكاملة" },
+      title: { en: "Full content creation", ar: "صناعة محتوى متكاملة" },
       description: {
         en: "Concept, shoot, and edit handled start to finish, not just the editing pass.",
         ar: "من الفكرة إلى التصوير والمونتاج، من البداية للنهاية، وليس فقط مرحلة المونتاج.",
@@ -212,6 +212,30 @@ export const about = {
   ],
 };
 
+// Its own small section, right after About. Each entry can optionally
+// hold a real certificate file — drop the file in public/certificates/
+// and point `file` at it (e.g. "/certificates/ielts.pdf"). Leave `file`
+// as null for a credential with nothing to show yet (like an in-progress
+// degree) and the card just won't render a "View certificate" link.
+export const certificates = {
+  heading: { en: "Certificates", ar: "الشهادات" },
+  sectionLabel: { en: "Credentials", ar: "المؤهلات" },
+  title: { en: "A couple of credentials, for the record.", ar: "بعض المؤهلات، للتوثيق." },
+  viewLabel: { en: "View certificate", ar: "عرض الشهادة" },
+  items: [
+    {
+      name: { en: "AI Software Engineering", ar: "هندسة برمجيات الذكاء الاصطناعي" },
+      issuer: { en: "University of Technology — current student", ar: "الجامعة التكنولوجية — طالب حاليًا" },
+      file: null,
+    },
+    {
+      name: { en: "IELTS", ar: "آيلتس" },
+      issuer: { en: "English proficiency certificate, Malaysia", ar: "شهادة كفاءة في اللغة الإنجليزية، ماليزيا" },
+      file: "/certificates/IELTS_Test_Report_Form_cropped.pdf",
+    },
+  ],
+};
+
 export const contact = {
   heading: { en: "Let's make something worth watching.", ar: "لنصنع شيئًا يستحق المشاهدة." },
   subheading: {
@@ -234,7 +258,7 @@ export const contact = {
   ],
   form: {
     // Formspree/Netlify Forms endpoint — see README.md to wire this up.
-    action: "https://formspree.io/f/mqpawjwa",
+    action: "https://formspree.io/f/your-form-id",
     fields: {
       name: { en: "Name", ar: "الاسم" },
       email: { en: "Email", ar: "البريد الإلكتروني" },
@@ -261,5 +285,5 @@ export const ui = {
 };
 
 export const seo = {
-  siteUrl: "https://zamyoportfolio.netlify.app/",
+  siteUrl: "https://zamyo.example",
 };

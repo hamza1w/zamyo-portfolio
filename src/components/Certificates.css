@@ -1,0 +1,53 @@
+.certificates__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1vw + 1.2rem, 1.9rem);
+  line-height: 1.35;
+  max-width: 38ch;
+  margin-bottom: clamp(2rem, 2.5vw, 2.8rem);
+}
+
+.certificates__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.certificates__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1 1 280px;
+  min-width: 240px;
+  padding: 1.4rem 1.6rem;
+  border-radius: var(--radius-lg);
+}
+
+.certificates__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--paper);
+}
+
+.certificates__issuer {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+
+.certificates__link {
+  align-self: start;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.certificates__link:hover,
+.certificates__link:focus-visible {
+  text-decoration-color: var(--gold-light);
+}
