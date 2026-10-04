@@ -258,7 +258,7 @@ export const contact = {
   ],
   form: {
     // Formspree/Netlify Forms endpoint — see README.md to wire this up.
-    action: "https://formspree.io/f/your-form-id",
+    action: "https://formspree.io/f/mqpawjwa",
     fields: {
       name: { en: "Name", ar: "الاسم" },
       email: { en: "Email", ar: "البريد الإلكتروني" },
@@ -285,5 +285,5 @@ export const ui = {
 };
 
 export const seo = {
-  siteUrl: "https://zamyo.example",
+  siteUrl: "https://zamyoportfolio.netlify.app/",
 };
