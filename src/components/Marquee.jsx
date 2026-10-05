@@ -13,16 +13,26 @@ export default function Marquee({ label, items, reverse = false }) {
         <p className="section-label">{label}</p>
       </div>
 
-                      <div className="marquee__track-wrap">
-          <div className="marquee__glass glass-liquid">
-            <div className={`marquee__track ${reverse ? "marquee__track--reverse" : ""}`}>
-          {loop.map((item, i) => (
-            <span className="marquee__item" key={`${item}-${i}`}>
-              {item}
-            </span>
-          ))}
+      <div className="marquee__track-wrap">
+        <div className="marquee__glass glass-liquid">
+          <div className={`marquee__track ${reverse ? "marquee__track--reverse" : ""}`}>
+            {loop.map((item, i) => {
+              // Items are usually just plain strings. To make one stand out
+              // in a special color, use { name: "...", highlight: true }
+              // instead of a bare string — see site.config.js.
+              const text = typeof item === "string" ? item : item.name;
+              const isSpecial = typeof item === "object" && item.highlight;
+              return (
+                <span
+                  className={`marquee__item${isSpecial ? " marquee__item--special" : ""}`}
+                  key={`${text}-${i}`}
+                >
+                  {text}
+                </span>
+              );
+            })}
+          </div>
         </div>
-      </div>
       </div>
     </section>
   );
