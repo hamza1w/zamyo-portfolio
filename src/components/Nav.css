@@ -7,6 +7,17 @@
   padding-block: 1.4rem;
   transition: padding var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
   border-bottom: none;
+  /* iOS Safari has a known bug where a position: fixed element that sits
+     near backdrop-filter children can drop off its own compositing layer
+     during momentum scrolling and flicker out of view for a frame (or
+     longer) — exactly "header disappears when scrolling". Forcing the nav
+     onto its own GPU layer up front prevents Safari from demoting it
+     mid-scroll. Harmless on browsers that don't have the bug. */
+  transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 .nav--scrolled {

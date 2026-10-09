@@ -118,6 +118,19 @@
     grid-column: span 2;
   }
 
+  /* With an odd number of cards, the last one is left alone in its row
+     with empty space beside it (visible with 5 projects, e.g.). Centering
+     it in the row — rather than spanning both columns — keeps it the
+     same compact size as the rest; spanning the full row would double
+     its width and, with a 9:16 aspect-ratio, make it almost twice as
+     tall too, reintroducing the oversized-card problem. Only matters
+     when it isn't already a full-width --wide card. */
+  .work__card:last-child:nth-child(odd):not(.work__card--wide) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 0.3rem);
+    margin-inline: auto;
+  }
+
   /* Touch devices can't hover, so the title/category need to show
      permanently instead of only on hover/focus. */
   .work__overlay {

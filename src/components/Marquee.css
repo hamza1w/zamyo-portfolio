@@ -36,7 +36,7 @@
    wins regardless of whether the item lands on an odd or even slot. */
 .marquee__item.marquee__item--special {
   color: var(--gold-light);
-  text-shadow: 0 0 14px rgba(233, 199, 101, 0.55), 0 0 28px rgba(201, 162, 39, 0.25);
+  text-shadow: 0 0 14px rgba(233, 199, 101, 0.55), 0 0 20px rgba(201, 162, 39, 0.25);
 }
 
 .marquee__track--reverse {
