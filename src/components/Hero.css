@@ -67,7 +67,7 @@
 .hero__portrait .media-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 @media (max-width: 900px) {

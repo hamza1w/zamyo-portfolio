@@ -138,8 +138,34 @@
 
 @media (max-width: 860px) {
   .nav__links,
-  .nav__cta {
+  /* Qualified with .nav__inner rather than the bare class: .nav__cta and
+     global.css's .btn (which sets display: inline-flex) are equal
+     specificity, live in different files, and Vite's dev bundling order
+     happened to put .btn after this rule — so .btn was winning and the
+     "Let's talk" button stayed visible on mobile despite this rule. The
+     extra qualifier makes this win regardless of file/bundle order. */
+  .nav__inner .nav__cta {
     display: none;
+  }
+
+  /* With .nav__links hidden, the grid's left (1fr) column has nothing in
+     it while the right (1fr) column still holds the lang toggle + the
+     hamburger — real, non-zero content. CSS Grid still gives both 1fr
+     tracks the same base share of free space, but the right track also
+     gets pushed wider by its own content's min-size, which shifts the
+     "auto" center column (the ZAMYO mark) left of true-center. Taking the
+     mark out of the grid and centering it on the nav bar itself fixes
+     that regardless of what either side weighs. */
+  .nav__mark {
+    /* Without resetting grid-column, the absolutely-positioned item's
+       containing block stays the narrow grid-column: 2 cell (its own
+       natural width) instead of the full nav bar, so left: 50% would
+       center it within that cell, not the viewport — still off-center. */
+    grid-column: 1 / -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .nav__toggle {

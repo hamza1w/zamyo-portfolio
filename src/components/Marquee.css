@@ -7,9 +7,7 @@
   direction: ltr;
   mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
 }
-.marquee__item.marquee__item--special {
-  color: var(--gold-light); /* change this */
-}
+
 .marquee__glass {
   padding-inline: 1.5rem;
 }
@@ -30,9 +28,15 @@
   white-space: nowrap;
 }
 
+.marquee__item:nth-child(odd) {
+  color: var(--paper-dim);
+}
+
+/* Placed after :nth-child(odd) and matched on two classes so it always
+   wins regardless of whether the item lands on an odd or even slot. */
 .marquee__item.marquee__item--special {
   color: var(--gold-light);
-  text-shadow: 0 0 10px rgba(233, 199, 101, 0.55), 0 0 28px rgba(201, 162, 39, 0.25);
+  text-shadow: 0 0 14px rgba(233, 199, 101, 0.55), 0 0 28px rgba(201, 162, 39, 0.25);
 }
 
 .marquee__track--reverse {

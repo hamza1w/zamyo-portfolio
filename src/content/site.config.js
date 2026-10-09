@@ -45,7 +45,7 @@ export const hero = {
   eyebrow: { en: "Video editor & content creator", ar: "محرر فيديو وصانع محتوى" },
   headline: {
     en: ["Video that", "gets watched,", "not scrolled past."],
-    ar: ["فيديو", "يُشاهَد،", "لا يُتجاوَز."],
+    ar: ["فيديو", "يُشاهَد،", "لا يُهمل."],
   },
   subtext: {
     en: "I cut short-form content that holds attention from the first frame — for creators, brands, and businesses who need their work to actually get seen.",
@@ -61,7 +61,7 @@ export const showreel = {
   heading: { en: "The showreel", ar: "العرض التقديمي" },
   subheading: {
     en: "A minute of the work speaks louder than a page of the pitch.",
-    ar: "دقيقة من العمل تقول أكثر من صفحة كاملة من الكلام.",
+    ar: "لمحة عن بعض أعمالي.",
   },
   // Replace with your real showreel file (mp4, ideally H.264, under ~15MB) or a hosted URL.
   video: {
@@ -191,7 +191,7 @@ export const skills = {
 export const clients = {
   heading: { en: "worked with", ar: "تعاونت مع" },
   // Company names — never translated.
-  names: [{name: "Tajarib Podcast", highlight: true}, "Blackshot Marketing Agency", "DR.Marwa Saeed",{name: "DR.Saba Reyad", highlight: true}, "DR.Ruwaida Al-saab", "DR.Rehab Al-khayat", "DR.Ali Al-balkhy", "DR.Mustafa Al-rakabi"],
+  names: [{name: "Tajarib Podcast" , highlight: true}, "Blackshot Marketing Agency", "DR.Saba Reyad", "DR.Marwa Saeed", "DR.Ruwaida Al-saab", "DR.Rehab Al-khayat", "DR.Ali Al-balkhy", "DR.Mustafa Al-rakabi"],
 };
 
 export const about = {
