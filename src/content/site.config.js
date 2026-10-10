@@ -191,7 +191,7 @@ export const skills = {
 export const clients = {
   heading: { en: "worked with", ar: "تعاونت مع" },
   // Company names — never translated.
-  names: [{name: "Tajarib Podcast" , highlight: true}, "Blackshot Marketing Agency", "DR.Saba Reyad", "DR.Marwa Saeed", "DR.Ruwaida Al-saab", "DR.Rehab Al-khayat", "DR.Ali Al-balkhy", "DR.Mustafa Al-rakabi"],
+  names: [{name: "Tajarib Podcast" , highlight: true}, "Blackshot Marketing Agency", {name: "DR.Saba Reyad" , highlight: true}, "DR.Marwa Saeed", "DR.Ruwaida Al-saab", "DR.Rehab Al-khayat", "DR.Ali Al-balkhy", "DR.Mustafa Al-rakabi"],
 };
 
 export const about = {
