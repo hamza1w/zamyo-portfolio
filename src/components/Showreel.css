@@ -7,7 +7,7 @@
 .showreel__frame {
   position: relative;
   width: 100%;
-  max-width: 620px;
+  max-width: 800px;
   margin-inline: auto;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-lg);
@@ -40,37 +40,32 @@
   position: absolute;
   inset: 0;
   margin: auto;
-  width: fit-content;
-  height: fit-content;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  padding: 0.9rem 1.5rem 0.9rem 1.15rem;
-  background: rgba(10, 11, 14, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border-gold);
-  border-radius: 999px;
-  color: var(--gold-light);
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
   transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 
 .showreel__play:hover {
-  transform: scale(1.04);
-  background: rgba(10, 11, 14, 0.65);
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.26);
 }
 
 .showreel__play svg {
-  width: 46px;
-  height: 46px;
-  padding: 12px;
-  background: var(--gold);
-  color: #171307;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  margin-inline-start: 3px;
 }
 
 .showreel__duration {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--paper);
+  display: none;
 }

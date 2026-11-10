@@ -326,7 +326,7 @@ export default function Scene3D() {
     mount.appendChild(renderer.domElement);
 
     scene.add(new THREE.AmbientLight(0x30373f, 1.1));
-    const key = new THREE.PointLight(GOLD_LIGHT, 20, 45);
+    const key = new THREE.PointLight(GOLD_LIGHT, 60, 50);
     key.position.set(-7, 5, 9);
     scene.add(key);
     const rim = new THREE.PointLight(SAPPHIRE_LIGHT, 22, 45);
@@ -376,8 +376,8 @@ export default function Scene3D() {
     const travelRange = maxScroll * scrollMultiplier;
 
     const INSTANCE_COUNT = 18;
-    const minZ = -9;
-    const maxZ = 7;
+    const minZ = -18;
+    const maxZ = 4;
     const objects = [];
     const placed = []; // for rejection-sampling spacing
     const group = new THREE.Group();
@@ -410,7 +410,7 @@ export default function Scene3D() {
       let bestCandidate = null;
       let bestScore = -Infinity;
       do {
-        x = (Math.random() - 0.5) * 15;
+        x = (Math.random() - 0.5) * 22;
         spreadY = 4 - (i / INSTANCE_COUNT) * (travelRange + 10) + (Math.random() - 0.5) * 4;
         let minDist = Infinity;
         for (const p of placed) {

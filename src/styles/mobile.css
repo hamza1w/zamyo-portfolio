@@ -1,0 +1,460 @@
+/* ==========================================================================
+   MOBILE OVERRIDES
+   --------------------------------------------------------------------------
+   Everything in this file lives inside a max-width media query, so nothing
+   here can affect the desktop layout. It is imported LAST in main.jsx so it
+   always wins over the component stylesheets.
+
+   Breakpoints match the rest of the site:
+     900px  tablets and phones: light background, no blur, lighter effects
+     860px  navigation switches to the hamburger
+     800px  Services / Contact stack into one column
+     700px  Showreel frame
+     640px  phones: Work grid, lightbox, footer
+   To undo all mobile changes, remove the import of this file in main.jsx.
+   ========================================================================== */
+
+/* ---- 900px and below: performance + simple modern background ---------- */
+@media (max-width: 900px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Light, static background. The three.js scene is not loaded on small
+     screens (see App.jsx), and the grain / scanline / blend-mode layers of
+     the desktop background are what made scrolling heavy on phones. */
+  .app-bg {
+    background:
+      radial-gradient(120% 52% at 50% -6%, rgba(62, 124, 166, 0.36), transparent 62%),
+      radial-gradient(85% 42% at 105% 58%, rgba(62, 124, 166, 0.15), transparent 70%),
+      radial-gradient(80% 38% at -5% 100%, rgba(201, 162, 39, 0.1), transparent 70%),
+      linear-gradient(180deg, #0a1119 0%, var(--ink) 55%, #060910 100%);
+  }
+
+  /* A faint dot grid that fades out toward the bottom. Static, so it is
+     painted once and costs nothing while scrolling. */
+  .app-bg::before {
+    mix-blend-mode: normal;
+    background-image: radial-gradient(rgba(124, 186, 223, 0.13) 1px, transparent 1.4px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 62%);
+    mask-image: linear-gradient(180deg, #000 0%, transparent 62%);
+  }
+
+  .app-bg::after {
+    display: none;
+  }
+
+  /* Blur has nothing to blur on a smooth gradient, and it is the most
+     expensive effect on phones — so it is switched off and the surfaces
+     get slightly stronger fills instead. */
+  .glass,
+  .glass-liquid,
+  .glass-edge,
+  .btn-ghost,
+  .nav__pill-glass.glass-liquid,
+  .showreel__play,
+  .work__close,
+  .work__lightbox-backdrop {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .glass {
+    background: linear-gradient(160deg, rgba(124, 186, 223, 0.11), rgba(124, 186, 223, 0.045));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      0 14px 30px -18px rgba(0, 0, 0, 0.75);
+  }
+
+  .glass-liquid {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-liquid::before {
+    mix-blend-mode: normal;
+    opacity: 0.6;
+  }
+
+  /* The big blurred highlight blob is a costly filter on a rotated layer. */
+  .glass-liquid::after {
+    display: none;
+  }
+
+  .glass-edge,
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero__glow {
+    filter: none;
+  }
+
+  /* The glow layer is wider than the screen (inset: -20%), which made the
+     whole page scroll sideways on phones. Clip sideways only. */
+  .hero {
+    overflow-x: clip;
+  }
+
+  .work__lightbox-backdrop {
+    background: rgba(5, 5, 7, 0.92);
+  }
+
+  .showreel__play {
+    background: rgba(10, 11, 14, 0.62);
+  }
+
+  .work__close {
+    background: rgba(10, 11, 14, 0.65);
+  }
+
+  /* ---- Marquee: lighter animation, no per-frame masking ---- */
+  .marquee__track-wrap {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee__glass {
+    padding-inline: 0.75rem;
+  }
+
+  .marquee__track {
+    gap: 2rem;
+    padding-block: 1.1rem;
+    will-change: transform;
+  }
+
+  .marquee__item {
+    font-size: clamp(1.2rem, 5.2vw, 1.7rem);
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    padding-top: 5.75rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero__inner {
+    gap: 2.25rem;
+  }
+
+  /* Headline and buttons first so they are visible without scrolling; the
+     portrait follows, centred. */
+  .hero .hero__portrait-wrap {
+    order: 0;
+    justify-self: center;
+    width: min(78vw, 300px);
+    margin: 0.25rem 0 0;
+  }
+
+  .hero__headline {
+    font-size: clamp(2.1rem, 9.6vw, 3.4rem);
+    line-height: 1.08;
+    margin-bottom: 1.25rem;
+  }
+
+  [dir="rtl"] .hero__headline {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 1.25;
+  }
+
+  .hero__subtext {
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero__ctas {
+    gap: 0.75rem;
+  }
+
+  .hero__ctas .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0.9rem 1.25rem;
+  }
+
+  /* ---- Section rhythm ---- */
+  .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  .btn {
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+/* ---- 900px and below, touch only: hover doesn't exist, so the project
+   titles must always be visible (the 640px rules below cover phones; this
+   covers touch tablets). ---- */
+@media (max-width: 900px) and (hover: none) {
+  .work__overlay {
+    opacity: 1;
+    background: linear-gradient(180deg, transparent 55%, rgba(6, 6, 8, 0.88) 100%);
+  }
+}
+
+/* ---- 860px and below: navigation ---------------------------------------- */
+@media (max-width: 860px) {
+  /* Anchor links land below the fixed bar instead of underneath it. */
+  section[id] {
+    scroll-margin-top: 3.75rem;
+  }
+
+  .nav {
+    padding-block: 0.7rem;
+  }
+
+  /* Once the page scrolls, the bar gets a solid-ish background so content
+     never runs underneath the logo and the menu button. */
+  .nav.nav--scrolled {
+    padding-block: 0.5rem;
+    background: rgba(7, 10, 16, 0.9);
+    box-shadow:
+      0 1px 0 var(--glass-border),
+      0 10px 24px -14px rgba(0, 0, 0, 0.7);
+  }
+
+  .nav .nav__inner {
+    gap: 0.5rem;
+  }
+
+  /* The bar itself replaces the little glass capsule behind the logo. */
+  .nav .nav__pill-glass {
+    display: none;
+  }
+
+  .nav .nav__mark.nav__pill {
+    padding: 0.3rem 0.5rem;
+    font-size: 1.4rem;
+  }
+
+  .nav .nav__actions {
+    gap: 0.35rem;
+  }
+
+  .nav .nav__lang {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.9rem;
+  }
+
+  /* 44px touch target; the two lines turn into an X when the menu is open. */
+  .nav .nav__toggle {
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav .nav__toggle span {
+    width: 24px;
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .nav .nav__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .nav .nav__toggle[aria-expanded="true"] span:nth-child(2) {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .nav .nav__sheet {
+    gap: 0;
+    margin: 0.5rem var(--gutter) 0;
+    padding: 0.25rem 1.25rem 1.25rem;
+    background: rgba(10, 15, 22, 0.97);
+    max-height: calc(100vh - 5.5rem);
+    max-height: calc(100dvh - 5.5rem);
+    overflow-y: auto;
+    animation: nav-sheet-in 0.22s var(--ease-out);
+  }
+
+  .nav .nav__sheet > a:not(.btn) {
+    padding: 0.95rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .nav .nav__sheet .btn {
+    align-self: stretch;
+    margin-top: 1.1rem;
+  }
+}
+
+@keyframes nav-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- 800px and below: stacked sections ---------------------------------- */
+@media (max-width: 800px) {
+  .services__grid {
+    gap: 2rem;
+  }
+
+  /* "Main focus" sat jammed against "What I do", and "Also available"
+     stretched into a full-width bar. Both now size to their text. */
+  .services__tag {
+    display: block;
+    width: fit-content;
+    align-self: flex-start;
+  }
+
+  .services__primary .services__tag {
+    margin-top: 0.85rem;
+  }
+
+  .services__primary-title {
+    max-width: none;
+    margin-bottom: 1rem;
+  }
+
+  .services__primary-desc {
+    max-width: none;
+    font-size: 1rem;
+  }
+
+  .contact__direct,
+  .contact__form {
+    padding: 1.25rem;
+  }
+
+  .contact__channel-value {
+    font-size: 1.15rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Three social links no longer fit on one line inside the card. */
+  .contact__social {
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .contact__form .btn {
+    align-self: stretch;
+  }
+}
+
+/* ---- 700px and below: showreel ------------------------------------------ */
+@media (max-width: 700px) {
+  /* The poster is a 16:9 frame; the old 4:5 box left big empty bars. */
+  .showreel__frame {
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .showreel__heading {
+    max-width: none;
+  }
+
+  .showreel__play {
+    gap: 0.7rem;
+    padding: 0.65rem 1.15rem 0.65rem 0.8rem;
+  }
+
+  .showreel__play svg {
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+  }
+}
+
+/* ---- 640px and below: phones -------------------------------------------- */
+@media (max-width: 640px) {
+  .work__card {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .work__note {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  /* Smaller viewfinder corners so they don't swamp the small thumbnails. */
+  .work__media .frame-corners span {
+    width: 12px;
+    height: 12px;
+  }
+
+  .work__media .frame-corners span:nth-child(1) { top: 8px; left: 8px; }
+  .work__media .frame-corners span:nth-child(2) { top: 8px; right: 8px; }
+  .work__media .frame-corners span:nth-child(3) { bottom: 8px; left: 8px; }
+  .work__media .frame-corners span:nth-child(4) { bottom: 8px; right: 8px; }
+
+  .work__overlay {
+    padding: 0.75rem;
+  }
+
+  /* Lightbox sized to the visible screen (dvh follows the browser bars). */
+  .work__lightbox {
+    padding: 0.75rem;
+  }
+
+  .work__lightbox-panel.glass {
+    background: rgba(10, 15, 22, 0.97);
+    max-height: 94vh;
+    max-height: 94dvh;
+    padding: 0.75rem;
+  }
+
+  .work__lightbox-media,
+  .work__lightbox-media video {
+    max-height: 68vh;
+    max-height: 68dvh;
+  }
+
+  .work__close {
+    width: 44px;
+    height: 44px;
+    top: 0.9rem;
+    inset-inline-end: 0.9rem;
+  }
+
+  .work__lightbox-info {
+    padding-top: 1rem;
+  }
+
+  .work__lightbox-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .certificates__card {
+    min-width: 0;
+    padding: 1.15rem 1.25rem;
+  }
+
+  .footer {
+    padding-block: 1.75rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.9rem;
+  }
+
+  .footer__links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1.25rem;
+  }
+}

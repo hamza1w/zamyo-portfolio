@@ -48,7 +48,7 @@ export default function Showreel() {
           {!playing && (
             <button className="showreel__play" onClick={play} aria-label="Play showreel">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M6 4.5v15l14-7.5-14-7.5Z" fill="currentColor" />
+                <path d="M7 4.5v15l13-7.5-13-7.5Z" fill="currentColor" />
               </svg>
               <span className="showreel__duration">{showreel.duration}</span>
             </button>

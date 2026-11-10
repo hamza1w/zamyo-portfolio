@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
 import "./styles/global.css";
+// Phone/tablet overrides. Keep this LAST so it wins over component styles.
+import "./styles/mobile.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
